@@ -870,12 +870,12 @@ ELSE
 FI
 {\<exists> a as. List next p as \<and> as @ [a] = Ps}"
 apply (vcg_simp) 
-  apply (intro conjI)
+apply (intro conjI)
     apply (metis List_def List_unique Path.simps(1) 
          Path.simps(2) addr.simps)
     apply (metis List_Ref List_hd_not_in_tl addr.simps 
        hd_Cons_tl list.discI list.inject)
-  apply (intro conjI)
+apply (intro conjI)
       apply (metis List_def Path.simps(2) addr.simps 
       list.collapse)
       apply (metis List_app List_def Path.simps(2) 
@@ -889,9 +889,10 @@ apply (vcg_simp)
         list.collapse)
       apply (metis List_def Path.simps(1) Path.simps(2) 
         addr.simps list.collapse ref.distinct(1))   
-  by (metis List_unique Path.simps(1) Path_is_List 
-     addr.simps append.left_neutral empty_iff empty_set 
-     fun_upd_triv not_Ref_eq self_append_conv)
+apply  (metis List_unique Path.simps(1) Path_is_List 
+       addr.simps append.left_neutral empty_iff empty_set 
+       fun_upd_triv not_Ref_eq self_append_conv)
+done
 
 abbreviation inv_del where 
 "inv_del heap head q tp ps qs xs \<equiv>
@@ -1131,32 +1132,19 @@ apply (intro conjI)
     list.sel(1) list.sel(3))
 apply (intro conjI)
   apply (metis List_def Path.simps(2) addr.simps list.collapse)
-  apply (metis List_app List_def Path.simps(2) Path_is_List disjoint_iff_not_equal hd_Cons_tl hd_in_set)
+  apply (metis List_app List_def Path.simps(2) Path_is_List 
+     disjoint_iff_not_equal hd_Cons_tl hd_in_set)
   apply (metis List_distinct distinct.simps(2) list.collapse)
   apply (simp add: disjoint_iff_not_equal list.set_sel(2))
   apply (metis List_def Path.simps(2) addr.simps list.collapse)
   apply (metis List_def Path.simps(2) addr.simps list.collapse)
-  apply (metis List_def Path.simps(1) Path.simps(2) addr.simps list.collapse ref.distinct(1))
+  apply (metis List_def Path.simps(1) Path.simps(2) addr.simps 
+   list.collapse ref.distinct(1))
 apply (metis List_Ref List_def Path.simps(1) Path.simps(2) 
      addr.simps length_Cons list.size(3) neq_Nil_conv)
 done
    
 \<comment> \<open>double-linked lists\<close>
-  
-   
- 
-  
-  
-  
-  
-  
- 
-  
-  
- 
-  
-  
-  
-apply (vcg_simp)
-   
+
+end   
    

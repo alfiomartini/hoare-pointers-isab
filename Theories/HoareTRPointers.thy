@@ -1051,6 +1051,112 @@ next
        by auto
    qed
 qed
-\<comment> \<open>double-linked lists\<close>
+
+lemma "VARS p next q tmp  ps qs
+{List next p Ps  \<and> p \<noteq> Null}
+IF p^.next = Null
+  \<comment> \<open>Ps has exactly one element\<close>
+  THEN p:= Null;ps:=[];qs:=Ps
+ELSE
+  \<comment> \<open>Ps has at least two elements \<close>
+  tmp := p; q:= p^.next;
+  ps :=[hd Ps]; qs := tl Ps;
+  WHILE q^.next \<noteq> Null 
+  INV  {p \<noteq> Null \<and> List next p Ps 
+        \<and> List next q qs 
+        \<and> List (next(last ps := Null)) p ps
+        \<and> ps @ qs = Ps 
+        \<and> set ps \<inter> set qs = {}
+        \<and> next (last ps) = q
+        \<and> last ps = addr tmp
+        \<and> ps \<noteq> [] \<and> qs \<noteq> []
+       }
+  DO
+     tmp := q;  ps := ps @ [hd qs];
+     q:= q^.next; qs := tl qs
+  OD;
+  tmp^.next := Null
+FI
+{\<exists> a. List next p ps \<and> ps @ [a]  = Ps}"
+apply (vcg_simp)
+apply (intro conjI) 
+   apply auto[1]
+   apply (metis List_Ref List_hd_not_in_tl addr.simps list.discI 
+    list.sel(1) list.sel(3))
+apply (intro conjI)
+   apply (metis List_def Path.simps(2) addr.simps list.collapse) 
+   apply (metis List_app List_def Path.simps(2) Path_is_List 
+         disjoint_iff_not_equal hd_Cons_tl hd_in_set)
+   apply (metis List_distinct distinct.simps(2) list.collapse)
+   apply (simp add: disjoint_iff_not_equal list.set_sel(2))
+   apply (metis List_def Path.simps(2) addr.simps list.collapse)
+   apply (metis List_def Path.simps(2) addr.simps list.collapse)
+   apply (metis List_def Path.simps(1) Path.simps(2) addr.simps 
+          list.collapse ref.distinct(1))
+apply (metis List_unique Path.simps(1) Path_is_List
+       addr.simps append.left_neutral empty_iff empty_set 
+       fun_upd_triv not_Ref_eq self_append_conv)
+done
  
-end
+lemma "VARS p next q tmp  ps qs
+{List next p Ps  \<and> p \<noteq> Null}
+IF p^.next = Null
+  \<comment> \<open>Ps has exactly one element\<close>
+  THEN p:= Null;ps:=[];qs:=Ps
+ELSE
+  \<comment> \<open>Ps has at least two elements \<close>
+  tmp := p; q:= p^.next;
+  ps :=[hd Ps]; qs := tl Ps;
+  WHILE q^.next \<noteq> Null 
+  INV  {p \<noteq> Null \<and> List next p Ps 
+        \<and> List next q qs 
+        \<and> List (next(last ps := Null)) p ps
+        \<and> ps @ qs = Ps 
+        \<and> set ps \<inter> set qs = {}
+        \<and> next (last ps) = q
+        \<and> last ps = addr tmp
+        \<and> ps \<noteq> [] \<and> qs \<noteq> []
+       }
+  DO
+     tmp := q;  ps := ps @ [hd qs];
+     q:= q^.next; qs := tl qs
+  OD;
+  tmp^.next := Null
+FI
+{List next p ps \<and> ps @ qs  = Ps \<and> length qs = 1}" 
+apply (vcg_simp)
+apply (intro conjI)
+  using Suc_length_conv apply auto[1]
+  apply (metis List_Ref List_hd_not_in_tl addr.simps list.discI 
+    list.sel(1) list.sel(3))
+apply (intro conjI)
+  apply (metis List_def Path.simps(2) addr.simps list.collapse)
+  apply (metis List_app List_def Path.simps(2) Path_is_List disjoint_iff_not_equal hd_Cons_tl hd_in_set)
+  apply (metis List_distinct distinct.simps(2) list.collapse)
+  apply (simp add: disjoint_iff_not_equal list.set_sel(2))
+  apply (metis List_def Path.simps(2) addr.simps list.collapse)
+  apply (metis List_def Path.simps(2) addr.simps list.collapse)
+  apply (metis List_def Path.simps(1) Path.simps(2) addr.simps list.collapse ref.distinct(1))
+apply (metis List_Ref List_def Path.simps(1) Path.simps(2) 
+     addr.simps length_Cons list.size(3) neq_Nil_conv)
+done
+   
+\<comment> \<open>double-linked lists\<close>
+  
+   
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+  
+apply (vcg_simp)
+   
+   
